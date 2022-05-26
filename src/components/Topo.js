@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import Bob from "./assets/bob.png"
-export default function Topo(){
+import UserContext from './contexts/UserContext';
+import { useContext } from "react";
+export default function Topo({}){
+    const {dados} = useContext(UserContext);
+   
     return(
         <Header>
-             <h2>Trackit</h2>
-             <img src={Bob} alt="" />
+            <h2>Tracklit</h2>
+            <img src={dados.image} alt="" />
         </Header>
     )
 }

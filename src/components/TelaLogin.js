@@ -1,15 +1,52 @@
 import styled from 'styled-components';
-
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import axios from 'axios';
+import { useState } from "react";
 import Logomarca from './Logomarca';
+import UserContext from './contexts/UserContext';
 
 export default function TelaLogin(){
+    const [loginemail, setloginEmail] =  useState();
+    const {dados, setDados} = useContext(UserContext);
+    const [loginpassword, setloginPassword] =  useState();
+    const navigate = useNavigate()
+
+    function Login(event){
+        event.preventDefault();
+        const dadosLogin = {
+            email: loginemail,
+            password: loginpassword,
+        }
+         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',dadosLogin )
+         promise.then((response) => {
+              
+            setDados(response.data);
+            console.log({dados})
+            navigate("/Habitos");
+          });
+             
+        promise.catch(err => console.log(err))
+        
+    }
+
+
+
  return(
      <Container>
          <Logomarca />
-         <input placeholder="teste@teste.com" type="text" />
-         <input placeholder="••••••" type="text" />
-         <button>Entrar</button>
-         <h4>Não tem uma conta? Cadastre-se!</h4>
+         <form >
+            <input placeholder="teste@teste.com" type="email"  onChange={e => setloginEmail(e.target.value)}  value={loginemail} required/>
+            <input placeholder="••••••" type="password"  onChange={e => setloginPassword(e.target.value)}  value={loginpassword} required/>
+            <button onClick={Login}>Entrar</button>
+        </form>
+        
+        
+         <Link to={`/Cadastro`}>
+            <h4>Não tem uma conta? Cadastre-se!</h4>
+		 </Link>
+       
+       
      </Container>
  )
 }
@@ -55,5 +92,9 @@ const Container = styled.div`
         line-height: 26px;
         text-align: center;
 
+    }
+    form{
+        display:flex;
+        flex-direction: column;
     }
 `;

@@ -1,17 +1,49 @@
 import styled from 'styled-components';
-
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Logomarca from './Logomarca';
+import axios from 'axios';
 
 export default function TelaCadastro(){
+
+    const [email, setEmail] = useState([]);
+    const [name, setName] = useState([]);
+    const [password, setPassword] = useState([]);
+    const [foto, setFoto] = useState([]);
+    const navigate = useNavigate()
+
+    function singUp(event){
+        event.preventDefault();
+        const body = {
+            email: email,
+            name: name,
+            image: foto,
+            password: password,
+        }
+        const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body)
+        promise.then(() => navigate("/"))
+        promise.catch(err => console.log(err))
+       
+    }
+    //http://pm1.narvii.com/6283/c5bbdbd8c332e8354d3d6a728ad38992d1002ef9_00.jpg
     return(
         <Container>
             <Logomarca />
-            <input placeholder="email" type="email" />
-            <input placeholder="senha" type="text" />
-            <input placeholder="nome" type="email" />
-            <input placeholder="foto" type="text" />
-            <button>Cadastrar</button>
-            <h4>Já tem uma conta? Faça login!</h4>
+            <form>
+                <input placeholder="email" type="email"  onChange={e => setEmail(e.target.value)}  value={email} required />
+                <input placeholder="senha" type="password"  onChange={e => setPassword(e.target.value)}  value={password} required />
+                <input placeholder="nome" type="text"  onChange={e => setName(e.target.value)}  value={name} required />
+                <input placeholder="foto" type="text"  onChange={e => setFoto(e.target.value)}  value={foto}  />
+                <button onClick={singUp}>Cadastrar</button>
+            </form>
+            
+            <Link to={`/`}>
+             <h4>Já tem uma conta? Faça login!</h4>
+			</Link>
+       
+            
+            
          </Container>
        
     )
@@ -58,5 +90,9 @@ const Container = styled.div`
         line-height: 26px;
         text-align: center;
 
+    }
+    form{
+        display:flex;
+        flex-direction: column;
     }
 `;
