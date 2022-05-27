@@ -23,7 +23,7 @@ export default function TelaLogin(){
               
             setDados(response.data);
             console.log({dados})
-            navigate("/Habitos");
+            navigate("/Hoje");
           });
              
         promise.catch(err => console.log(err))

@@ -5,6 +5,7 @@ import Hoje from "./components/Hoje";
 import TelaHabitos from "./components/Telahabitos";
 import UserContext from "./components/contexts/UserContext";
 import { useState } from "react";
+import Historico from "./components/Historico";
 
 export default function App(){
    
@@ -22,6 +23,7 @@ export default function App(){
                     <Route path="/Cadastro" element={<TelaCadastro />}/>
                     <Route path="/Habitos" element={<TelaHabitos />}/>
                     <Route path="/Hoje" element={<Hoje />} />
+                    <Route path="/Historico" element={<Historico />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>

@@ -1,9 +1,18 @@
 import styled from "styled-components"
+import {useNavigate} from "react-router-dom";
+
 export default function Footer(){
+const navigate = useNavigate()
+function Habits(){
+    navigate("/Habitos");
+}
+function Historic(){
+    navigate("/Historico");
+}
     return(
         <Conteiner>
-            <p>Hábitos</p>
-            <p>Histórico</p>
+            <p onClick={Habits}>Hábitos</p>
+            <p onClick={Historic}>Histórico</p>
         </Conteiner>
         
     )
@@ -17,8 +26,9 @@ const Conteiner = styled.div`
     position: fixed;
 	bottom: 0;
     justify-content: space-between;
-    width: 95%;
+    width: 85%;
     height: 70px;
+    margin: 10px 10px 30px 30px;
 
 	p{
         font-family: 'Lexend Deca';

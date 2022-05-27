@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import UserContext from './contexts/UserContext';
 import { useContext } from "react";
-export default function Topo({}){
+export default function Topo(){
     const {dados} = useContext(UserContext);
    
     return(
