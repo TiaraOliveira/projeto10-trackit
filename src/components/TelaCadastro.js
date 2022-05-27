@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {useState } from "react";
 import Logomarca from './Logomarca';
 import axios from 'axios';
 
@@ -13,6 +13,7 @@ export default function TelaCadastro(){
     const [foto, setFoto] = useState([]);
     const navigate = useNavigate()
 
+    
     function singUp(event){
         event.preventDefault();
         const body = {
@@ -23,7 +24,10 @@ export default function TelaCadastro(){
         }
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body)
         promise.then(() => navigate("/"))
-        promise.catch(err => console.log(err))
+        promise.catch(err => {
+            const message = err.message.status.Text;
+            alert(message)
+        })
        
     }
     //http://pm1.narvii.com/6283/c5bbdbd8c332e8354d3d6a728ad38992d1002ef9_00.jpg

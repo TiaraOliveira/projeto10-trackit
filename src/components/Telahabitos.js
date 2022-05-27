@@ -4,17 +4,20 @@ import MyHabits from './MyHabits';
 import Footer from './Footer';
 
 export default function TelaHabitos(){
+
+function NenhumHabito(){
+    return <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+}
+
     return(
         <>
             <Topo />
             <MyHabits />
-            <Container>   
-                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-
-            </Container>
+                <Container>   
+                    {NenhumHabito()}
+                </Container>
             <Footer />
         </>
-        
     )
 }
 

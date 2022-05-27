@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useState } from "react";
 import Logomarca from './Logomarca';
 import UserContext from './contexts/UserContext';
+import { Circles } from  'react-loader-spinner'
 
 export default function TelaLogin(){
     const [loginemail, setloginEmail] =  useState();
@@ -26,7 +27,10 @@ export default function TelaLogin(){
             navigate("/Hoje");
           });
              
-        promise.catch(err => console.log(err))
+        promise.catch(err => {
+            const message = err.message.status.Text;
+            alert(message)
+        })
         
     }
 

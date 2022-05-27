@@ -1,30 +1,56 @@
 import { useState } from "react";
 import styled from "styled-components"
-
+import DiaSemana from "./DiaSemana";
 
 
 export default function MyHabits(){
 
 const[NewHabits, setNewHabits] = useState([])
-const [toggle, setToggle] = useState(false);
+const [diaSelecionado, setDiaSelecionado] = useState([]);
 const week = [
-    {id:1, dia:"D"},
-    {id:2, dia:"S"},
-    {id:3, dia:"T"},
-    {id:4, dia:"Q"},
-    {id:5, dia:"Q"},
-    {id:6, dia:"S"},
-    {id:7, dia:"S"},
+    {id:0, dia:"D", selecionado: true},
+    {id:1, dia:"S", selecionado: true},
+    {id:2, dia:"T", selecionado: true},
+    {id:3, dia:"Q", selecionado: true},
+    {id:4, dia:"Q", selecionado: true},
+    {id:5, dia:"S", selecionado: true},
+    {id:6, dia:"S", selecionado: true},
+    
 ]
-   
+
+
+function toggle(id, dia) {
+    const jaSelecionado = diaSelecionado.some(dia => dia.id === id);
+    if (!jaSelecionado) {
+        setDiaSelecionado([...diaSelecionado, { id, dia }]);
+    } else {
+      const novosDias = diaSelecionado.filter(dia => dia.id !== id);
+      setDiaSelecionado(novosDias);
+    }
+  }
+
+   function RenderizarDiasSemana(){
+    return week.map(x => {
+        const { id, dia, selecionado } = x;
+        
+        return (
+          <DiaSemana
+            key={id}
+            id={id}
+            dia={dia}
+           selecionado={selecionado}
+           aoSelecionar={(id, dia) => toggle(id, dia)}
+          />
+        );
+      });
+ }
+
     function addHabito(){
         return(
         setNewHabits(
         <HabitoNovo>
             <input placeholder="nome do hábito" type="text" />
-            
-                {week.map((day) => <Days onClick={()=> setToggle(true)} toggle={toggle}>{day.dia}</Days>)}
-            
+            {RenderizarDiasSemana()}
          <Changes>
                 <h2>Cancelar</h2>
                 <button>Salvar</button>    
@@ -143,15 +169,3 @@ const Changes = styled.div`
        
 `
 
-const Days = styled.div`  
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: ${({toggle}) => toggle ? '#ffffff': '#446677'};
-        margin-top:10px;
-        margin-left:5px;
-        width: 30px;
-        height: 30px;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
-`

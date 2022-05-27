@@ -7,6 +7,7 @@ import UserContext from "./components/contexts/UserContext";
 import { useState } from "react";
 import Historico from "./components/Historico";
 
+
 export default function App(){
    
     const [dados, setDados] = useState([]);
