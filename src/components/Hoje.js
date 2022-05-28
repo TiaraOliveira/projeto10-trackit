@@ -2,9 +2,37 @@ import Topo from './Topo';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import Footer from './Footer';
+import { useState, useEffect } from 'react';
+import UserContext from './contexts/UserContext';
+import { useContext } from "react";
+import axios from 'axios';
 
 export default function Hoje(){
   const now = dayjs()
+  const {dados} = useContext(UserContext);
+ 
+
+  useEffect(()=>{
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${dados.token}`
+        }
+    }
+    
+    const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+
+    promise.then(response => {
+ 
+        console.log(response.data)
+      });
+
+      promise.catch(err => {
+        const message = err.response.statusText;
+        alert(message);
+      });
+}, [])
+
+
   return(
       <>
          <Topo />
@@ -17,7 +45,7 @@ export default function Hoje(){
                     <p>sequencia atual</p>
                     <p>Seu recorde: 5 dias</p>
                 </div>
-                <button>check</button>
+                <ion-icon name="checkmark"></ion-icon>
              </Atividade>
          </Container>
          <Footer />

@@ -3,7 +3,10 @@ import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 export default function Topo(){
     const {dados} = useContext(UserContext);
-   
+    const listaSerializada = localStorage.getItem("user"); 
+    const lista = JSON.parse(listaSerializada); 
+    console.log(` lista aqui ${lista}`)
+
     return(
         <Header>
             <h2>Tracklit</h2>
@@ -32,7 +35,9 @@ const Header = styled.div`
     }
     img{
         height: 51px;
+        width: 51px;
         margin-right: 19px;
+        border-radius: 100px;
     }
 	
 `;

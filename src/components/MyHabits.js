@@ -1,71 +1,99 @@
 import { useState } from "react";
 import styled from "styled-components"
 import DiaSemana from "./DiaSemana";
+import UserContext from './contexts/UserContext';
+import { useContext } from "react";
+import axios from 'axios';
 
 
-export default function MyHabits(){
+export default function MyHabits(){    
+    const [diasSelecionados, setDiasSelecionados] = useState([]);
+    const [form, setForm] = useState(false);
+    const[name, setName] = useState("")
+    const {dados} = useContext(UserContext);
 
-const[NewHabits, setNewHabits] = useState([])
-const [diaSelecionado, setDiaSelecionado] = useState([]);
-const week = [
-    {id:0, dia:"D", selecionado: true},
-    {id:1, dia:"S", selecionado: true},
-    {id:2, dia:"T", selecionado: true},
-    {id:3, dia:"Q", selecionado: true},
-    {id:4, dia:"Q", selecionado: true},
-    {id:5, dia:"S", selecionado: true},
-    {id:6, dia:"S", selecionado: true},
+    const week = [
+        {id:0, dia:"D"},
+        {id:1, dia:"S"},
+        {id:2, dia:"T"},
+        {id:3, dia:"Q"},
+        {id:4, dia:"Q"},
+        {id:5, dia:"S"},
+        {id:6, dia:"S"},
+    ]
+
+    function salvarIdDia(selecionado, id) {
+        if (!selecionado) {
+            setDiasSelecionados([...diasSelecionados, id]);
+        }
+        else {
+            setDiasSelecionados(diasSelecionados.filter((elemento) =>  elemento !== id))
+        }
+    }
+
+  function CancelarAtividade(){
+      setName("")
+      setDiasSelecionados([])
+      console.log({diasSelecionados})
+  }  
+
+  function SalvarAtividade(){
+     
+      
+    const body = { 
+        name: name,
+        days: diasSelecionados,
+     };
+     
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${dados.token}`
+        }
+    }
     
-]
+    axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+    .then(answer => console.log("deubom"))
+    .catch(err => console.log("deuruim"))
 
-
-function toggle(id, dia) {
-    const jaSelecionado = diaSelecionado.some(dia => dia.id === id);
-    if (!jaSelecionado) {
-        setDiaSelecionado([...diaSelecionado, { id, dia }]);
-    } else {
-      const novosDias = diaSelecionado.filter(dia => dia.id !== id);
-      setDiaSelecionado(novosDias);
-    }
-  }
-
-   function RenderizarDiasSemana(){
-    return week.map(x => {
-        const { id, dia, selecionado } = x;
-        
-        return (
-          <DiaSemana
-            key={id}
-            id={id}
-            dia={dia}
-           selecionado={selecionado}
-           aoSelecionar={(id, dia) => toggle(id, dia)}
-          />
-        );
-      });
- }
-
-    function addHabito(){
-        return(
-        setNewHabits(
-        <HabitoNovo>
-            <input placeholder="nome do hábito" type="text" />
-            {RenderizarDiasSemana()}
-         <Changes>
-                <h2>Cancelar</h2>
-                <button>Salvar</button>    
-         </Changes>   
-        </HabitoNovo>
-        ))
-        
-    }
+    setTimeout(() => {
+        setForm(false)
+      }, 1000);
+}  
     return(
         <Habits>
             <AdicionarHabito>
                 <h1>Meus hábitos</h1>
-                <button onClick={(addHabito)}>+</button>
+                <button onClick={() => setForm(true)}>+</button>
+              
             </AdicionarHabito>
-         {NewHabits}
+            {form
+                ?
+                <NewHabit>
+                    <Nome>
+                            <input placeholder="Digite seu nome..." type="text" value={name} onChange={e => setName(e.target.value)} required />
+                    </Nome>
+                    <Semanas>
+                        {week.map(dia => {
+                                    return (
+                                        <DiaSemana
+                                            key={dia.id}
+                                            id={dia.id}
+                                            dia={dia.dia}
+                                            salvarIdDia={salvarIdDia}
+                                        />
+                                    );
+                                })}
+                    </Semanas>
+                    <Changes>
+                        <h2 onClick={CancelarAtividade}>Cancelar</h2>
+                        <button onClick={SalvarAtividade}>Salvar</button>       
+                    </Changes>   
+                       
+                </NewHabit>
+                
+                :
+                ''}
+                
         </Habits>
     )
 }
@@ -118,11 +146,7 @@ const HabitoNovo = styled.div`
         align-items: flex-start;
         flex-direction: column;
 
-        input{
-            height: 45px;
-            width: 303px;
-            margin-top:30px;
-        }
+        
 
         button{
           
@@ -143,6 +167,8 @@ const Changes = styled.div`
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        margin-right: 19px;
+             
 
         button{
             width: 84px;
@@ -157,6 +183,7 @@ const Changes = styled.div`
             font-size: 15.976px;
             line-height: 20px;
             color: #FFFFFF;
+            
         }
 
         h2{
@@ -165,7 +192,31 @@ const Changes = styled.div`
             font-weight: 400;
             font-size: 16px;
             color: #52B6FF;
+            margin-right: 19px;
         }
        
 `
+const Semanas = styled.div`
+    display: flex;
+    width: 323px;
+    align-items: flex-start;
 
+`
+const Nome = styled.div`
+input{
+    height: 45px;
+    width: 303px;
+    margin-top:30px;
+    margin-left: 15px
+}
+`
+
+const NewHabit = styled.div`
+        width: 350px;
+        height: 200px;
+        left: 17px;
+        top: 147px;
+        background: #FFFFFF;
+        border-radius: 5px;
+        border: 1px solid #D5D5D5;
+`

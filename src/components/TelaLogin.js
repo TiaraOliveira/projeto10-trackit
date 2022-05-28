@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useState } from "react";
 import Logomarca from './Logomarca';
 import UserContext from './contexts/UserContext';
-import { Circles } from  'react-loader-spinner'
 
 export default function TelaLogin(){
     const [loginemail, setloginEmail] =  useState();
@@ -13,6 +12,8 @@ export default function TelaLogin(){
     const [loginpassword, setloginPassword] =  useState();
     const navigate = useNavigate()
 
+    
+      
     function Login(event){
         event.preventDefault();
         const dadosLogin = {
@@ -21,9 +22,11 @@ export default function TelaLogin(){
         }
          const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login',dadosLogin )
          promise.then((response) => {
-              
-            setDados(response.data);
-            console.log({dados})
+           
+           setDados(response.data);
+           const serializedUser = JSON.stringify(dados);
+
+           localStorage.setItem("user", serializedUser);
             navigate("/Hoje");
           });
              
