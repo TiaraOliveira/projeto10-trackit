@@ -82,7 +82,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
               :
                 `${habitsCompleted.toFixed(0)}% dos hábitos concluídos`
             }</p>
-             <Container>   
+             <HabitList>   
                         {listaHabitosHoje.length === 0 ?
                        'ESPERA AI'
                     :
@@ -102,7 +102,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                         );
                     })
                     }
-                </Container>
+                </HabitList>
              
            
          </Container>
@@ -113,10 +113,10 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
 
 
 const Container = styled.div`
-margin-top: 90px;
-overflow-y: scroll;
-scrollbar-width: none;
-margin-botton: 100px;
+    margin-top: 60px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin-botton: 10px;
 	
     h2{
         color: #126BA5;
@@ -141,11 +141,12 @@ const Atividade = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 40px 10px 30px 30px;
-    height: 94px;
+    margin: 10px 10px 30px 30px;
+    height: 170px;
     background: #FFFFFF;
     border-radius: 5px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    padding-left: 15px;
 p{
   font-family: 'Lexend Deca';
   font-style: normal;
@@ -169,4 +170,8 @@ const Icon = styled.div`
         border-radius: 5px;
         
         margin-right: 19px;
+`
+const HabitList = styled.div`
+    margin-bottom: 100px;
+    margin-top: 40px;
 `
