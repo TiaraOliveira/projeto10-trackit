@@ -20,6 +20,7 @@ function DiaSemana({ dia, id, salvarIdDia}) {
     <Posicao
       selecionado={selecionado}
       onClick={() => { selecionar(selecionado, id)}}
+      
     >
       {dia}
     </Posicao>

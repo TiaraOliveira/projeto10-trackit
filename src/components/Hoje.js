@@ -12,13 +12,14 @@ export default function Hoje(){
   const now = dayjs()
   const {dados} = useContext(UserContext);
   const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
+  const config = {
+    headers: {
+        "Authorization": `Bearer ${dados.token}`
+    }
+}
 
   useEffect(()=>{
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${dados.token}`
-        }
-    }
+   
     
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
@@ -33,7 +34,27 @@ export default function Hoje(){
       });
 }, [])
 
-
+function HabitoFeito(id, done){
+    if (!done) {
+        const promise = axios.post(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
+          {},
+          config
+        );
+        promise.then(console.log("foi certo"));
+        promise.catch(console.log("foi errado"));
+      } else {
+        const promise = axios.post(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
+          {},
+          config
+        );
+        promise.then(console.log("foi certo"));
+        promise.catch(console.log("foi errado"));
+     
+   }
+  
+}
   return(
       <>
          <Topo />
@@ -52,7 +73,7 @@ export default function Hoje(){
                                     <p>sequencia atual: {habito.currentSequence} dias</p>
                                     <p>Seu recorde: {habito.highestSequence} dias</p>
                                 </div>
-                                <Icon>
+                                <Icon check={habito.done} onClick={()=> HabitoFeito(habito.id, habito.done)}>
                                     <ion-icon name="checkmark"></ion-icon>
                                 </Icon>
                             
@@ -72,7 +93,6 @@ export default function Hoje(){
 
 const Container = styled.div`
 	
-
     h2{
         color: #126BA5;
         
@@ -101,14 +121,12 @@ const Atividade = styled.div`
     background: #FFFFFF;
     border-radius: 5px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-
 p{
   font-family: 'Lexend Deca';
   font-style: normal;
   
   
 }
-
 div{
     display: flex;
     flex-direction: column;
@@ -118,11 +136,10 @@ div{
 ion-icon{
     font-size: 50px;
     color: #ffffff
-
 }
 `
 const Icon = styled.div`
-        background: #EBEBEB;
+        background: ${(props) => (props.check ? "#8FC549" : "#EBEBEB")};
         border: 1px solid #E7E7E7;
         border-radius: 5px;
         

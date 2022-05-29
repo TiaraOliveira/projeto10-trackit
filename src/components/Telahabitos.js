@@ -52,7 +52,7 @@ useEffect(()=>{
                                 <p>{habito.name}</p>
                                 <button>{habito.days}</button>
                             </Infos>
-                            <Deletar>
+                            <Deletar >
                                 <ion-icon name="trash-outline"></ion-icon>
                             </Deletar>
                         </Activity>
