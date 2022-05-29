@@ -6,12 +6,16 @@ import { useState, useEffect } from 'react';
 import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 import axios from 'axios';
+import PercentageContext from './contexts/PercentageContext';
 
 
 export default function Hoje(){
   const now = dayjs()
   const {dados} = useContext(UserContext);
   const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
+  const { percentage, setPercentage } = useContext(PercentageContext);
+
+
   const config = {
     headers: {
         "Authorization": `Bearer ${dados.token}`
@@ -19,7 +23,7 @@ export default function Hoje(){
 }
 
   useEffect(()=>{
-   
+    
     
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
@@ -49,18 +53,35 @@ function HabitoFeito(id, done){
           {},
           config
         );
-        promise.then(console.log("foi certo"));
-        promise.catch(console.log("foi errado"));
+        
      
    }
   
 }
+
+
+const habitsDone = listaHabitosHoje.filter((habit) => {
+    return habit.done === true;
+  })
+
+  let habitsCompleted = ((habitsDone.length/listaHabitosHoje.length) * 100);
+  setPercentage(habitsCompleted)
+
+  
   return(
       <>
          <Topo />
          <Container>   
              <h2> {now.format("dddd")} {now.format("DD/MM/YYYY")}</h2>
-             <p>Nenhum hábito concluído ainda</p>
+             <p>
+                 {listaHabitosHoje.length === 0 ?
+              `Você não tem nenhum hábito a ser feito hoje. Adicione um hábito na guia de "Hábitos" apresentada no Menu no canto inferior da tela.`
+            :
+              habitsDone.length === 0 ?
+                "Nenhum hábito concluído ainda"
+              :
+                `${habitsCompleted.toFixed(0)}% dos hábitos concluídos`
+            }</p>
              <Container>   
                         {listaHabitosHoje.length === 0 ?
                        'ESPERA AI'
@@ -92,6 +113,10 @@ function HabitoFeito(id, done){
 
 
 const Container = styled.div`
+margin-top: 90px;
+overflow-y: scroll;
+scrollbar-width: none;
+margin-botton: 100px;
 	
     h2{
         color: #126BA5;

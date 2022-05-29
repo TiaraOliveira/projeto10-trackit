@@ -2,10 +2,14 @@ import styled from "styled-components"
 import {useNavigate} from "react-router-dom";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useContext } from "react";
+import PercentageContext from './contexts/PercentageContext';
+
 
 
 export default function Footer(){
-    const percentage = 66;
+    const { percentage} = useContext(PercentageContext);
+    
 const navigate = useNavigate()
 function Habits(){
     navigate("/Habitos");
@@ -38,9 +42,8 @@ const Conteiner = styled.div`
 	bottom: 0;
     z-index:1;
     justify-content: space-between;
-    width: 85%;
+    width: 100%;
     height: 70px;
-    margin: 0px 0px 30px 30px;
     background-color: #ffffff;
 
 	p{
@@ -59,4 +62,7 @@ const Conteiner = styled.div`
 
 const Circulo = styled.div`
 width: 95px;
+heigth:100px;
+margin-botton: 20px;
+justify-content: space-around;
 `

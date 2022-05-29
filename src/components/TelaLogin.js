@@ -5,16 +5,20 @@ import axios from 'axios';
 import { useState } from "react";
 import Logomarca from './Logomarca';
 import UserContext from './contexts/UserContext';
+import { Circles } from  'react-loader-spinner'
+
+
 
 export default function TelaLogin(){
     const [loginemail, setloginEmail] =  useState();
     const {dados, setDados} = useContext(UserContext);
     const [loginpassword, setloginPassword] =  useState();
     const navigate = useNavigate()
-
+    const [Loading, setLoading] = useState(false);
     
       
     function Login(event){
+        setLoading(true);
         event.preventDefault();
         const dadosLogin = {
             email: loginemail,
@@ -30,11 +34,10 @@ export default function TelaLogin(){
             navigate("/Hoje");
           });
              
-        promise.catch(err => {
-            const message = err.message.status.Text;
-            alert(message)
-        })
-        
+        promise.catch(alert("Login ou senha não cadastrados, tente novamente."))
+        setLoading(false);
+        setloginEmail("")
+        setloginPassword("")
     }
 
 
@@ -45,7 +48,11 @@ export default function TelaLogin(){
          <form >
             <input placeholder="teste@teste.com" type="email"  onChange={e => setloginEmail(e.target.value)}  value={loginemail} required/>
             <input placeholder="••••••" type="password"  onChange={e => setloginPassword(e.target.value)}  value={loginpassword} required/>
-            <button onClick={Login}>Entrar</button>
+            <button onClick={Login}>{Loading ? (
+             <Circles color="#00BFFF" height={80} width={80}/>
+            ) : (
+              "Entrar"
+            )}</button>
         </form>
         
         

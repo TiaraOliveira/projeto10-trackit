@@ -11,13 +11,14 @@ export default function TelaHabitos(){
 
 const [listaHabitos, setListaHabitos] = useState([]);   
 const {dados} = useContext(UserContext);
+const config = {
+    headers: {
+        "Authorization": `Bearer ${dados.token}`
+    }
+}
+
 
 useEffect(()=>{
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${dados.token}`
-        }
-    }
     
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
 
@@ -33,6 +34,19 @@ useEffect(()=>{
 }, [])
 
 
+function HabitoApagado(id){
+    
+        const promise = axios.post(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+          {},
+          config
+        );
+       
+        promise.then(console.log("foi certo"));
+        promise.catch(console.log("foi errado"));
+     
+   }
+  
 
 
     return(
@@ -52,7 +66,7 @@ useEffect(()=>{
                                 <p>{habito.name}</p>
                                 <button>{habito.days}</button>
                             </Infos>
-                            <Deletar >
+                            <Deletar onClick={()=> HabitoApagado(habito.id)} >
                                 <ion-icon name="trash-outline"></ion-icon>
                             </Deletar>
                         </Activity>

@@ -18,6 +18,9 @@ export default function Topo(){
 const Header = styled.div`
 	display: flex;
     align-items: center;
+    position: fixed;
+	top: 0;
+    width: 100%;
     justify-content: space-between;
 	color: #126BA5;
 	height: 70px;

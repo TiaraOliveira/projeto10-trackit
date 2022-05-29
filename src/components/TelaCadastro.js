@@ -63,7 +63,7 @@ const Container = styled.div`
 	width:100%;
     position: fixed;
     top: 100px;
-	
+	margin-top: 90px;
 	
     input{
         color: #F2F2F2
