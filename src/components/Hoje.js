@@ -7,10 +7,11 @@ import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 import axios from 'axios';
 
+
 export default function Hoje(){
   const now = dayjs()
   const {dados} = useContext(UserContext);
- 
+  const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
 
   useEffect(()=>{
     const config = {
@@ -19,11 +20,11 @@ export default function Hoje(){
         }
     }
     
-    const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+    const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
     promise.then(response => {
- 
-        console.log(response.data)
+        setListaHabitosHoje(response.data);
+        
       });
 
       promise.catch(err => {
@@ -39,14 +40,29 @@ export default function Hoje(){
          <Container>   
              <h2> {now.format("dddd")} {now.format("DD/MM/YYYY")}</h2>
              <p>Nenhum hábito concluído ainda</p>
-             <Atividade>
-                <div>
-                    <h4>Ler 1 capitulo de livro</h4>
-                    <p>sequencia atual</p>
-                    <p>Seu recorde: 5 dias</p>
-                </div>
-                <ion-icon name="checkmark"></ion-icon>
-             </Atividade>
+             <Container>   
+                        {listaHabitosHoje.length === 0 ?
+                       'ESPERA AI'
+                    :
+                    listaHabitosHoje.map((habito) => {
+                        return(
+                            <Atividade>
+                                <div>
+                                    <h4>{habito.name}</h4>
+                                    <p>sequencia atual: {habito.currentSequence} dias</p>
+                                    <p>Seu recorde: {habito.highestSequence} dias</p>
+                                </div>
+                                <Icon>
+                                    <ion-icon name="checkmark"></ion-icon>
+                                </Icon>
+                            
+                            </Atividade>
+                        );
+                    })
+                    }
+                </Container>
+             
+           
          </Container>
          <Footer />
       </>
@@ -99,4 +115,16 @@ div{
     justify-content: center;
     align-items: flex-start;
 }
+ion-icon{
+    font-size: 50px;
+    color: #ffffff
+
+}
+`
+const Icon = styled.div`
+        background: #EBEBEB;
+        border: 1px solid #E7E7E7;
+        border-radius: 5px;
+        
+        margin-right: 19px;
 `

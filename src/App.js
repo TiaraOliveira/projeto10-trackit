@@ -6,16 +6,18 @@ import TelaHabitos from "./components/Telahabitos";
 import UserContext from "./components/contexts/UserContext";
 import { useState } from "react";
 import Historico from "./components/Historico";
-
+import PercentageContext from "./components/contexts/PercentageContext";
 
 export default function App(){
    
     const [dados, setDados] = useState([]);
+    const [percentage, setPercentage] = useState([])
    
    
    
     return(
         <UserContext.Provider value={{dados, setDados}}>
+             <PercentageContext.Provider value={{percentage, setPercentage}}>
             <BrowserRouter>
         {/* Tudo que tiver uma rota entre Routes */}
                 <Routes>
@@ -27,6 +29,7 @@ export default function App(){
                     <Route path="/Historico" element={<Historico />} />
                 </Routes>
             </BrowserRouter>
+            </PercentageContext.Provider>
         </UserContext.Provider>
         
     )
