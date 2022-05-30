@@ -93,7 +93,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                     listaHabitosHoje.map((habito) => {
                         return(
                             <Atividade>
-                                <div>
+                                <eii>
                                     <h4>{habito.name}</h4>
                                    
                                     <SeqAtual>
@@ -104,9 +104,8 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                                     <SeqAtual>
                                        <p>Seu Record:</p>
                                        <Record seque= {habito.highestSequence >= habito.currentSequence} highestSequence={habito.highestSequence}>{habito.currentSequence} dias</Record>
-                                     
                                     </SeqAtual>
-                                </div>
+                                </eii>
                                 <Icon check={habito.done} onClick={()=> HabitoFeito(habito.id, habito.done)}>
                                     <ion-icon name="checkmark"></ion-icon>
                                 </Icon>
@@ -180,7 +179,7 @@ p{
   
   
 }
-div{
+eii{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -229,29 +228,38 @@ const Done = styled.div`
 `
 
 const SeqAtual = styled.div`
-  display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width:200px;
     font-family: 'Lexend Deca';
     font-style: normal;
-   
+ 
+    margin-top: 15px;
 
     p{
     
       font-family: 'Lexend Deca';
       font-style: normal;
-      
-    
-    
+      margin-rigth: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
    
 `
 
 const Atual =styled.div`
 color: ${(props) => props.currentSequence !== 0 ? "#8FC549" : "#BABABA"};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
 `
 
 const Record = styled.div`
     color: ${(props) => props.seq===true || props.highestSequence !==0? "#8FC549" : "#BABABA"};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
 `
