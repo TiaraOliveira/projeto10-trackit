@@ -27,7 +27,7 @@ function Hoje(){
                  <CircularProgressbar background
                   backgroundPadding={6}
                   styles={buildStyles({
-                    backgroundColor: "#3e98c7",
+                    backgroundColor: "#52B6FF",
                     textColor: "#fff",
                     pathColor: "#fff",
                     trailColor: "transparent"
@@ -49,11 +49,10 @@ const Conteiner = styled.div`
 	bottom: 0;
     z-index:1;
     justify-content: space-between;
-    width: 90%;
+    width: 100%;
     height: 110px;
     background-color: #ffffff;
-    padding-right: 20px;
-    padding-left: 15px;
+  
 
 
 	p{
@@ -64,7 +63,8 @@ const Conteiner = styled.div`
         line-height: 22px;
         text-align: center;
         color: #52B6FF;
-
+        padding-right: 20px;
+        padding-left: 20px;
 
     }
    

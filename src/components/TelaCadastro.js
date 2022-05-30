@@ -28,7 +28,7 @@ export default function TelaCadastro(){
         const promise = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body)
         promise.then(() => navigate("/"))
         promise.catch((e) => {
-            alert("Login ou senha não correspondem, tente novamente.");
+            alert("Campos invalos, verifique preenchiment.");
             setLoading(false);
           });
        
@@ -106,5 +106,8 @@ const Container = styled.div`
     form{
         display:flex;
         flex-direction: column;
+    }
+    h4{
+        margin-top:15px;
     }
 `;

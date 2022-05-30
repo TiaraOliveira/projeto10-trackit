@@ -49,6 +49,7 @@ export default function MyHabits({listaHabitos, setListaHabitos}){
     const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
     promise.then(response => {
         setListaHabitos([...listaHabitos, response.data]);
+        setDiasSelecionados([])
         
       });
     

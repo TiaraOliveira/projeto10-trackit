@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 import axios from 'axios';
-
+import { createGlobalStyle } from 'styled-components';
 export default function TelaHabitos(){
 
 const [listaHabitos, setListaHabitos] = useState([]);   
@@ -46,7 +46,7 @@ function RenderizarHabitos(){
       });
 }
 function HabitoApagado(id){
-    const isExecuted = window.confirm("Are you sure to execute this action?");
+    const isExecuted = window.confirm("Certeza que deseja deletar este hábito?");
 
     if (isExecuted===true){
         const promise = axios.delete(
@@ -104,7 +104,11 @@ function HabitoApagado(id){
         </>
     )
 }
-
+const LocalStyle= createGlobalStyle`
+body{
+    background: red
+}
+`
 const Container = styled.div`
 	display: flex;
     flex-direction: column;
@@ -116,12 +120,12 @@ const Container = styled.div`
 	
 `
 const Subtitle = styled.div`
-
+    margin: 40px 15px 40px 40px;
 `
 
 const Activity = styled.div`
 
-        width: 360px;
+        width: 90%;
         height: 115px;
         display: flex;
         background: #FFFFFF;
@@ -183,6 +187,9 @@ const Caixadias = styled.div`
   border: 1px solid #d5d5d5;
   border-radius: 5px;
   margin: 10px 10px 1px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Frase = styled.div`

@@ -7,15 +7,14 @@ import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 import axios from 'axios';
 import PercentageContext from './contexts/PercentageContext';
-
+import 'dayjs/locale/pt-br'
 
 export default function Hoje(){
   const now = dayjs()
   const {dados} = useContext(UserContext);
   const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
   const { setPercentage } = useContext(PercentageContext);
-  
-
+  const [check, setcheck] = useState(false)
   const config = {
     headers: {
         "Authorization": `Bearer ${dados.token}`
@@ -43,6 +42,7 @@ function RenderizarHabitosHoje(){
 }
 function HabitoFeito(id, done){
     if (!done) {
+      
         const promise = axios.post(
           `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,
           {},
@@ -50,7 +50,9 @@ function HabitoFeito(id, done){
         );
         promise.then(RenderizarHabitosHoje());
         promise.catch(console.log("foi errado"));
+        
       } else {
+        
         const promise = axios.post(
           `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,
           {},
@@ -59,7 +61,6 @@ function HabitoFeito(id, done){
         promise.then(RenderizarHabitosHoje());
      
    }
-  
 }
 
 
@@ -75,8 +76,8 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
       <>
          <Topo />
          <Container>   
-             <h2> {now.format("dddd")} {now.format("DD/MM/YYYY")}</h2>
-             <p>
+             <h2> {now.locale('pt-br').format("dddd").replace("-feira", "")}, {now.format("DD/MM")}</h2>
+             <Done habitsDone={habitsDone.length}>
                  {listaHabitosHoje.length === 0 ?
               `Você não tem nenhum hábito a ser feito hoje. Adicione um hábito na guia de "Hábitos" apresentada no Menu no canto inferior da tela.`
             :
@@ -84,7 +85,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                 "Nenhum hábito concluído ainda"
               :
                 `${habitsCompleted.toFixed(0)}% dos hábitos concluídos`
-            }</p>
+            }</Done>
              <HabitList>   
                         {listaHabitosHoje.length === 0 ?
                        'ESPERA AI'
@@ -94,8 +95,18 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                             <Atividade>
                                 <div>
                                     <h4>{habito.name}</h4>
-                                    <p>sequencia atual: {habito.currentSequence} dias</p>
-                                    <p>Seu recorde: {habito.highestSequence} dias</p>
+                                   
+                                    <SeqAtual>
+                                       <p>Sequencia atual:</p>
+                                       <Atual currentSequence= {habito.currentSequence}>{habito.currentSequence}</Atual>
+                                       <p>dias</p>
+                                    </SeqAtual>
+                                    
+                                    <SeqAtual>
+                                       <p>Seu Record:</p>
+                                       <Record seque= {habito.currentSequence === habito.highestSequence} highestSequence={habito.highestSequence}>{habito.currentSequence}</Record>
+                                       <p>dias</p>
+                                    </SeqAtual>
                                 </div>
                                 <Icon check={habito.done} onClick={()=> HabitoFeito(habito.id, habito.done)}>
                                     <ion-icon name="checkmark"></ion-icon>
@@ -106,9 +117,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                     })
                     }
                 </HabitList>
-             
-           
-         </Container>
+        </Container>
          <Footer />
       </>
   )
@@ -123,13 +132,14 @@ const Container = styled.div`
 	
     h2{
         color: #126BA5;
-        
-font-family: 'Lexend Deca';
+        font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;
         font-size: 38.982px;
         line-height: 49px;
-        margin-left: 18px
+        margin-left: 28px;
+        margin-botton: 40px;
+        margin-top: 30px;
     }
     button{
         height: 70px;
@@ -137,7 +147,17 @@ font-family: 'Lexend Deca';
         background: #8FC549;
         border-radius: 5px;
     }
-	
+
+    span{
+      margin-left: 18px;
+      font-family: 'Lexend Deca';
+      font-style: normal;
+      margin-top: 20px;
+      margin-left: 28px;
+      color: ${(props) => props.habitsDone !== 0 ? "#8FC549" : "#BABABA"};
+      
+      
+    }
 `;
 
 const Atividade = styled.div`
@@ -151,8 +171,13 @@ const Atividade = styled.div`
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     padding-left: 15px;
 p{
-  font-family: 'Lexend Deca';
-  font-style: normal;
+    
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    margin-top: 15px;
+    margin-left: 18px;
+    margin-top: 15px;
+    margin-left: 28px;
   
   
 }
@@ -166,6 +191,18 @@ ion-icon{
     font-size: 50px;
     color: #ffffff
 }
+
+h4{
+  margin-left: 28px;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.976px;
+  line-height: 25px;
+  color: #666666;
+
+
+}
 `
 const Icon = styled.div`
         background: ${(props) => (props.check ? "#8FC549" : "#EBEBEB")};
@@ -177,4 +214,46 @@ const Icon = styled.div`
 const HabitList = styled.div`
     margin-bottom: 100px;
     margin-top: 40px;
+    width: 98%;
+`
+
+const Done = styled.div`
+
+  margin-left: 18px;
+  font-family: 'Lexend Deca';
+  font-style: normal;
+  margin-top: 20px;
+  margin-left: 28px;
+  color: ${(props) => props.habitsDone !== 0 ? "#8FC549" : "#BABABA"};
+  
+  
+`
+
+const SeqAtual = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     dispĺay: flex;
+     width:200px;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+   
+
+    p{
+    
+      font-family: 'Lexend Deca';
+      font-style: normal;
+      
+    
+    
+  }
+   
+`
+
+const Atual =styled.div`
+color: ${(props) => props.currentSequence !== 0 ? "#8FC549" : "#BABABA"};
+`
+
+const Record = styled.div`
+    color: ${(props) => props.seq===true || props.highestSequence !==0? "#8FC549" : "#BABABA"};
 `
