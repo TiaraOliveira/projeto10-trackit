@@ -14,7 +14,7 @@ export default function Hoje(){
   const {dados} = useContext(UserContext);
   const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
   const { setPercentage } = useContext(PercentageContext);
-  const [check, setcheck] = useState(false)
+
   const config = {
     headers: {
         "Authorization": `Bearer ${dados.token}`
@@ -98,14 +98,13 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
                                    
                                     <SeqAtual>
                                        <p>Sequencia atual:</p>
-                                       <Atual currentSequence= {habito.currentSequence}>{habito.currentSequence}</Atual>
-                                       <p>dias</p>
+                                       <Atual currentSequence= {habito.currentSequence}>{habito.currentSequence} dias</Atual>
                                     </SeqAtual>
                                     
                                     <SeqAtual>
                                        <p>Seu Record:</p>
-                                       <Record seque= {habito.currentSequence === habito.highestSequence} highestSequence={habito.highestSequence}>{habito.currentSequence}</Record>
-                                       <p>dias</p>
+                                       <Record seque= {habito.highestSequence >= habito.currentSequence} highestSequence={habito.highestSequence}>{habito.currentSequence} dias</Record>
+                                     
                                     </SeqAtual>
                                 </div>
                                 <Icon check={habito.done} onClick={()=> HabitoFeito(habito.id, habito.done)}>
@@ -230,11 +229,10 @@ const Done = styled.div`
 `
 
 const SeqAtual = styled.div`
-    display: flex;
+  display: flex;
     justify-content: center;
     align-items: center;
-     dispĺay: flex;
-     width:200px;
+    width:200px;
     font-family: 'Lexend Deca';
     font-style: normal;
    
