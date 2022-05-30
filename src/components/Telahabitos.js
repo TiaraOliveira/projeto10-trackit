@@ -7,6 +7,7 @@ import UserContext from './contexts/UserContext';
 import { useContext } from "react";
 import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
+
 export default function TelaHabitos(){
 
 const [listaHabitos, setListaHabitos] = useState([]);   
@@ -69,6 +70,7 @@ function HabitoApagado(id){
 
     return(
         <>
+        <GlobalStyle />
             <Topo />
             <MyHabits listaHabitos={listaHabitos} setListaHabitos={setListaHabitos} />
             <Container>   
@@ -104,10 +106,11 @@ function HabitoApagado(id){
         </>
     )
 }
-const LocalStyle= createGlobalStyle`
-body{
-    background: red
-}
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background:  #E5E5E5;;
+  }
 `
 const Container = styled.div`
 	display: flex;

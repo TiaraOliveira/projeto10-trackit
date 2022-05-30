@@ -8,6 +8,7 @@ import { useContext } from "react";
 import axios from 'axios';
 import PercentageContext from './contexts/PercentageContext';
 import 'dayjs/locale/pt-br'
+import { createGlobalStyle } from 'styled-components'
 
 export default function Hoje(){
   const now = dayjs()
@@ -74,6 +75,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
   
   return(
       <>
+       <GlobalStyle />
          <Topo />
          <Container>   
              <h2> {now.locale('pt-br').format("dddd").replace("-feira", "")}, {now.format("DD/MM")}</h2>
@@ -88,7 +90,7 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
             }</Done>
              <HabitList>   
                         {listaHabitosHoje.length === 0 ?
-                       'ESPERA AI'
+                       ''
                     :
                     listaHabitosHoje.map((habito) => {
                         return(
@@ -121,7 +123,11 @@ const habitsDone = listaHabitosHoje.filter((habit) => {
   )
 }
 
-
+const GlobalStyle = createGlobalStyle`
+  body {
+    background:  #E5E5E5;;
+  }
+`
 const Container = styled.div`
     margin-top: 60px;
     overflow-y: scroll;

@@ -8,7 +8,6 @@ import UserContext from './contexts/UserContext';
 import { ThreeDots } from  'react-loader-spinner'
 
 
-
 export default function TelaLogin(){
     const [loginemail, setloginEmail] =  useState();
     const {dados, setDados} = useContext(UserContext);
@@ -45,6 +44,8 @@ export default function TelaLogin(){
 
 
  return(
+     <>
+    
      <Container>
          <Logomarca />
          <form >
@@ -64,6 +65,8 @@ export default function TelaLogin(){
        
        
      </Container>
+     </>
+    
  )
 }
 

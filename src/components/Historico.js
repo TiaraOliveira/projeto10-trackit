@@ -1,11 +1,12 @@
 import Topo from './Topo';
 import styled from 'styled-components';
 import Footer from './Footer';
-
+import { createGlobalStyle } from 'styled-components'
 export default function Historico(){
  
   return(
       <>
+       <GlobalStyle />
          <Topo />
          <Container>   
              <h2>Histórico</h2>
@@ -16,8 +17,15 @@ export default function Historico(){
       </>
   )
 }
+const GlobalStyle = createGlobalStyle`
+  body {
+    background:  #E5E5E5;;
+  }
+`
 
 const Container = styled.div`
+
+margin-top: 90px;
     p{
         font-family: 'Lexend Deca';
         font-style: normal;

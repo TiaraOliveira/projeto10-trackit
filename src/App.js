@@ -8,7 +8,7 @@ import { useState } from "react";
 import Historico from "./components/Historico";
 import PercentageContext from "./components/contexts/PercentageContext";
 import './components/reset.css'
-import GlobalStyle from "./components/contexts/globalStyles";
+
 
 export default function App(){
    
@@ -32,7 +32,7 @@ export default function App(){
                     <Route path="/Historico" element={<Historico />} />
                    
                 </Routes>
-                <GlobalStyle />
+              
             </BrowserRouter>
             </PercentageContext.Provider>
         </UserContext.Provider>
