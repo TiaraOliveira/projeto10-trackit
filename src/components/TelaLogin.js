@@ -48,8 +48,8 @@ export default function TelaLogin(){
      <Container>
          <Logomarca />
          <form >
-            <input placeholder="teste@teste.com" type="email"  onChange={e => setloginEmail(e.target.value)}  value={loginemail} required/>
-            <input placeholder="••••••" type="password"  onChange={e => setloginPassword(e.target.value)}  value={loginpassword} required/>
+            <input placeholder="teste@teste.com" type="email"  onChange={e => setloginEmail(e.target.value)}  value={loginemail} disabled={Loading} required/>
+            <input placeholder="••••••" type="password"  onChange={e => setloginPassword(e.target.value)}  value={loginpassword} disabled={Loading} required/>
             <button onClick={Login}>{Loading ? (
              <ThreeDots color="#ffffff" height={25} width={316}/>
             ) : (

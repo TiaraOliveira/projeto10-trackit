@@ -49,9 +49,12 @@ const Conteiner = styled.div`
 	bottom: 0;
     z-index:1;
     justify-content: space-between;
-    width: 100%;
-    height: 70px;
+    width: 90%;
+    height: 110px;
     background-color: #ffffff;
+    padding-right: 20px;
+    padding-left: 15px;
+
 
 	p{
         font-family: 'Lexend Deca';

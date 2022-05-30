@@ -38,10 +38,10 @@ export default function TelaCadastro(){
         <Container>
             <Logomarca />
             <form>
-                <input placeholder="email" type="email"  onChange={e => setEmail(e.target.value)}  value={email} required />
-                <input placeholder="senha" type="password"  onChange={e => setPassword(e.target.value)}  value={password} required />
-                <input placeholder="nome" type="text"  onChange={e => setName(e.target.value)}  value={name} required />
-                <input placeholder="foto" type="text"  onChange={e => setFoto(e.target.value)}  value={foto}  />
+                <input placeholder="email" type="email"  onChange={e => setEmail(e.target.value)}  value={email} disabled={Loading} required />
+                <input placeholder="senha" type="password"  onChange={e => setPassword(e.target.value)}  value={password} disabled={Loading} required />
+                <input placeholder="nome" type="text"  onChange={e => setName(e.target.value)}  value={name} disabled={Loading} required />
+                <input placeholder="foto" type="text"  onChange={e => setFoto(e.target.value)}  value={foto} disabled={Loading} required />
                 <button onClick={singUp}>{Loading ? (
              <ThreeDots color="#ffffff" height={25} width={316}/>
             ) : (

@@ -104,6 +104,7 @@ const Habits = styled.div`
         align-items: center;
         flex-direction: column;
         margin-top:100px;
+   
 `
 
 const AdicionarHabito = styled.div`
@@ -220,4 +221,5 @@ const NewHabit = styled.div`
         background: #FFFFFF;
         border-radius: 5px;
         border: 1px solid #D5D5D5;
+       
 `

@@ -16,6 +16,15 @@ const config = {
         "Authorization": `Bearer ${dados.token}`
     }
 }
+const week = [
+    {id:0, dia:"D"},
+    {id:1, dia:"S"},
+    {id:2, dia:"T"},
+    {id:3, dia:"Q"},
+    {id:4, dia:"Q"},
+    {id:5, dia:"S"},
+    {id:6, dia:"S"},
+]
 
 
 useEffect(()=>{
@@ -72,10 +81,16 @@ function HabitoApagado(id){
                         return(
                         <Activity>
                             <Infos>
-                                <p>{habito.name}</p>
-                                <Posicao>
-                                    {habito.days}
-                                </Posicao>
+                                <Frase>
+                                        <p>{habito.name}</p>
+                                </Frase>
+                                 <Caixas>
+                                {week.map((day, index) => (
+                                        <Caixadias key={index} selected={habito.days.includes(index) ? true : false}>
+                                            {day.dia}
+                                        </Caixadias>
+                                         ))}
+                                </Caixas>
                             </Infos>
                             <Deletar onClick={()=> HabitoApagado(habito.id)} >
                                 <ion-icon name="trash-outline"></ion-icon>
@@ -96,23 +111,16 @@ const Container = styled.div`
 	align-items: center;
 	justify-content: center;
 	color: #666666;
+    margin-bottom: 130px;
 
-
-	p{
-        font-family: 'Lexend Deca';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        margin: 10px 10px 30px 30px;
-    }
-   
+	
 `
 const Subtitle = styled.div`
 
 `
 
 const Activity = styled.div`
+
         width: 360px;
         height: 115px;
         display: flex;
@@ -149,25 +157,42 @@ const Infos = styled.div`
 }
 `
 
-const Posicao = styled.button`
-  width: 36px;
-  height: 36px;
-  
-  border: 1px solid #D5D5D5;
-  border-radius: 5px;
+const Caixas = styled.div`
+    border-radius: 5px;
     display: flex;
   align-items: center;
   justify-content: center;
-
-  cursor: pointer;
   margin: 20px 7px;
- 
-`
+  background-color: #ffffff
+ `
 
 const Deletar  = styled.div`
     width:13px;
     height15px;
     margin-right: 19px;
     margin-top: 10px;
+
+`
+const Caixadias = styled.div`
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-family: "Lexend Deca", sans-serif;
+  color: ${(props) => (props.selected ? "#FFFFFF" : "#DBDBDB")};
+  background-color: ${(props) => (props.selected ? "#CFCFCF" : "#FFFFFF")};
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+  margin: 10px 10px 1px 1px;
+`;
+
+const Frase = styled.div`
+p{
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 10px 10px 30px 30px;
+}
 
 `
