@@ -32,12 +32,10 @@ export default function MyHabits(){
     }
 
   function CancelarAtividade(){
-      setName("")
-      setDiasSelecionados([])
-      console.log({diasSelecionados})
+    setForm(false)
   }  
 
-  function SalvarAtividade(){
+  function SalvarAtividade(RenderizarHabitos){
      
       
     const body = { 
@@ -51,13 +49,14 @@ export default function MyHabits(){
         }
     }
     
-    axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
-    .then(answer => console.log("deubom"))
-    .catch(err => console.log("deuruim"))
+    const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+    promise.then(RenderizarHabitos())
+    promise.catch(err => console.log("deuruim"))
 
     setTimeout(() => {
+
         setForm(false)
-      }, 1000);
+      }, 500);
 }  
     return(
         <Habits>
@@ -86,7 +85,7 @@ export default function MyHabits(){
                     </Semanas>
                     <Changes>
                         <h2 onClick={CancelarAtividade}>Cancelar</h2>
-                        <button onClick={SalvarAtividade}>Salvar</button>       
+                        <button onClick={SalvarAtividade(RenderizarHabitos)}>Salvar</button>       
                     </Changes>   
                        
                 </NewHabit>
@@ -103,6 +102,7 @@ const Habits = styled.div`
         justify-content: space-between;
         align-items: center;
         flex-direction: column;
+        margin-top:100px;
 `
 
 const AdicionarHabito = styled.div`

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useState } from "react";
 import Logomarca from './Logomarca';
 import UserContext from './contexts/UserContext';
-import { Circles } from  'react-loader-spinner'
+import { ThreeDots } from  'react-loader-spinner'
 
 
 
@@ -34,10 +34,12 @@ export default function TelaLogin(){
             navigate("/Hoje");
           });
              
-        promise.catch(alert("Login ou senha não cadastrados, tente novamente."))
-        setLoading(false);
-        setloginEmail("")
-        setloginPassword("")
+          promise.catch((e) => {
+            alert("Login ou senha não correspondem, tente novamente.");
+            setLoading(false);
+            setloginPassword("")
+            setloginEmail("")
+          });
     }
 
 
@@ -49,7 +51,7 @@ export default function TelaLogin(){
             <input placeholder="teste@teste.com" type="email"  onChange={e => setloginEmail(e.target.value)}  value={loginemail} required/>
             <input placeholder="••••••" type="password"  onChange={e => setloginPassword(e.target.value)}  value={loginpassword} required/>
             <button onClick={Login}>{Loading ? (
-             <Circles color="#00BFFF" height={80} width={80}/>
+             <ThreeDots color="#ffffff" height={25} width={316}/>
             ) : (
               "Entrar"
             )}</button>

@@ -13,8 +13,8 @@ export default function Hoje(){
   const now = dayjs()
   const {dados} = useContext(UserContext);
   const [listaHabitosHoje, setListaHabitosHoje] = useState([]);   
-  const { percentage, setPercentage } = useContext(PercentageContext);
-
+  const { setPercentage } = useContext(PercentageContext);
+  
 
   const config = {
     headers: {
@@ -24,8 +24,12 @@ export default function Hoje(){
 
   useEffect(()=>{
     
+    RenderizarHabitosHoje()
     
-    const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
+}, [])
+
+function RenderizarHabitosHoje(){
+  const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
     promise.then(response => {
         setListaHabitosHoje(response.data);
@@ -36,8 +40,7 @@ export default function Hoje(){
         const message = err.response.statusText;
         alert(message);
       });
-}, [])
-
+}
 function HabitoFeito(id, done){
     if (!done) {
         const promise = axios.post(
@@ -45,7 +48,7 @@ function HabitoFeito(id, done){
           {},
           config
         );
-        promise.then(console.log("foi certo"));
+        promise.then(RenderizarHabitosHoje());
         promise.catch(console.log("foi errado"));
       } else {
         const promise = axios.post(
@@ -53,7 +56,7 @@ function HabitoFeito(id, done){
           {},
           config
         );
-        
+        promise.then(RenderizarHabitosHoje());
      
    }
   

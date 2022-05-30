@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useNavigate} from "react-router-dom";
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useContext } from "react";
 import PercentageContext from './contexts/PercentageContext';
@@ -24,7 +24,14 @@ function Hoje(){
         <Conteiner>
             <p onClick={Habits}>Hábitos</p>
             <Circulo onClick={Hoje}>
-                 <CircularProgressbar  value={percentage} text={`${percentage}%`} />
+                 <CircularProgressbar background
+                  backgroundPadding={6}
+                  styles={buildStyles({
+                    backgroundColor: "#3e98c7",
+                    textColor: "#fff",
+                    pathColor: "#fff",
+                    trailColor: "transparent"
+                  })} value={percentage} text={"Hoje"} />
             </Circulo>
            
             <p onClick={Historic}>Histórico</p>

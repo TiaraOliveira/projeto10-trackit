@@ -20,6 +20,10 @@ const config = {
 
 useEffect(()=>{
     
+    RenderizarHabitos()
+}, [])
+
+function RenderizarHabitos(){
     const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
 
     promise.then(response => {
@@ -31,19 +35,24 @@ useEffect(()=>{
         const message = err.response.statusText;
         alert(message);
       });
-}, [])
-
-
+}
 function HabitoApagado(id){
-    
-        const promise = axios.post(
-          `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
-          {},
-          config
-        );
+    const isExecuted = window.confirm("Are you sure to execute this action?");
+
+    if (isExecuted===true){
+        const promise = axios.delete(
+            `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+            config
+          );
+         
+          promise.then(RenderizarHabitos());
+          promise.catch(console.log("foi errado"));
+    }
+
+    else{
+        console.log("aqui")
+    }
        
-        promise.then(console.log("foi certo"));
-        promise.catch(console.log("foi errado"));
      
    }
   
@@ -52,8 +61,8 @@ function HabitoApagado(id){
     return(
         <>
             <Topo />
-            <MyHabits />
-                <Container>   
+            <MyHabits RenderizarHabitos={RenderizarHabitos} />
+            <Container>   
                         {listaHabitos.length === 0 ?
                         <Subtitle>
                         Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
@@ -75,7 +84,7 @@ function HabitoApagado(id){
                         );
                     })
                     }
-                </Container>
+            </Container>  
             <Footer />
         </>
     )
