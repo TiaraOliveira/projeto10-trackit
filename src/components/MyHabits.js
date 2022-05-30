@@ -6,12 +6,11 @@ import { useContext } from "react";
 import axios from 'axios';
 
 
-export default function MyHabits(){    
+export default function MyHabits({listaHabitos, setListaHabitos}){    
     const [diasSelecionados, setDiasSelecionados] = useState([]);
     const [form, setForm] = useState(false);
     const[name, setName] = useState("")
     const {dados} = useContext(UserContext);
-
     const week = [
         {id:0, dia:"D"},
         {id:1, dia:"S"},
@@ -35,10 +34,8 @@ export default function MyHabits(){
     setForm(false)
   }  
 
-  function SalvarAtividade(RenderizarHabitos){
-     
-      
-    const body = { 
+  function SalvarAtividade({listaHabitos, setListaHabitos}){
+     const body = { 
         name: name,
         days: diasSelecionados,
      };
@@ -50,7 +47,11 @@ export default function MyHabits(){
     }
     
     const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
-    promise.then(RenderizarHabitos())
+    promise.then(response => {
+        setListaHabitos([...listaHabitos, response.data]);
+        
+      });
+    
     promise.catch(err => console.log("deuruim"))
 
     setTimeout(() => {
@@ -85,7 +86,7 @@ export default function MyHabits(){
                     </Semanas>
                     <Changes>
                         <h2 onClick={CancelarAtividade}>Cancelar</h2>
-                        <button onClick={SalvarAtividade(RenderizarHabitos)}>Salvar</button>       
+                        <button onClick={()=>SalvarAtividade({listaHabitos, setListaHabitos})}>Salvar</button>       
                     </Changes>   
                        
                 </NewHabit>

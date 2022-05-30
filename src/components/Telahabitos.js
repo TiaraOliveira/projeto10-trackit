@@ -61,7 +61,7 @@ function HabitoApagado(id){
     return(
         <>
             <Topo />
-            <MyHabits RenderizarHabitos={RenderizarHabitos} />
+            <MyHabits listaHabitos={listaHabitos} setListaHabitos={setListaHabitos} />
             <Container>   
                         {listaHabitos.length === 0 ?
                         <Subtitle>
